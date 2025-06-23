@@ -50,7 +50,7 @@ public class Main {
     static void dijkstra(int st) {
         PriorityQueue<Node> pq = new PriorityQueue<>();
         dist[st] = 0;
-        pq.offer(new Node(st, 0));
+        pq.offer(new Node(st, 0L));
 
         while (!pq.isEmpty()) {
             Node cur = pq.poll();

@@ -1,4 +1,4 @@
-# 1-2. Djikstra 구현
+# 1-2. Dijkstra 구현
 
 ```java
 import java.io.*;
@@ -53,7 +53,7 @@ public class Main {
     static void dijkstra(int st) {
         PriorityQueue<Node> pq = new PriorityQueue<>();
         dist[st] = 0;
-        pq.offer(new Node(st, 0));
+        pq.offer(new Node(st, 0L));
 
         while (!pq.isEmpty()) {
             Node cur = pq.poll();
