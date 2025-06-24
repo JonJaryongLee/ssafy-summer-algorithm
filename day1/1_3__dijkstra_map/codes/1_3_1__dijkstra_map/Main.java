@@ -12,10 +12,10 @@ public class Main {
     
     public static void main(String[] args) throws IOException {
         // 파일입출력
-        BufferedReader br = new BufferedReader(new FileReader("input.txt"));
+        // BufferedReader br = new BufferedReader(new FileReader("input.txt"));
         
         // 제출용
-        // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
