@@ -7,7 +7,6 @@
 피보나치 수열을 재귀로 구한다고 가정  
 
 ```java
-// java
 import java.io.*;
 import java.util.*;
 
@@ -29,20 +28,6 @@ public class Main {
         }
     }
 }
-```
-
-```python
-# python
-def fib(n):
-    # 재귀 함수로 피보나치 수 계산
-    if n <= 1:
-        return n
-    return fib(n - 1) + fib(n - 2)
-
-
-n = 10  # 출력할 피보나치 수열의 항 수
-sequence = [fib(i) for i in range(1, 11)]
-print("Fibonacci Sequence:", sequence)
 ```
 
 문제는, 숫자가 커질수록 이미 그 전에 시행했던 연산을 반복한다는 것이다.  
@@ -93,7 +78,6 @@ Bottom-Up 방식과 Top-Down 방식으로 나뉘는데, `dp[]` 배열을 기록�
 피보나치의 점화식은 `f(n) = f(n - 1) + f(n - 2)` 이므로, 초기값을 세팅한 후, 누적해나가면 된다.  
 
 ```java
-// java
 import java.io.*;
 import java.util.*;
 
@@ -121,29 +105,10 @@ public class Main {
 }
 ```
 
-```py
-# python
-n = 10  # 피보나치 수열 항의 개수
-dp = [0] * (n + 1)
-
-# 초기 값 설정
-dp[0] = 0
-dp[1] = 1
-dp[2] = 1
-
-# Bottom-Up
-for i in range(3, n + 1):
-    dp[i] = dp[i - 1] + dp[i - 2]
-
-sequence = [dp[i] for i in range(1, n + 1)]
-print("Fibonacci Sequence:", sequence)
-```
-
 ## 3-2. Top-Down (재귀)
 밑에서부터 하나하나 적어나가는 Bottom-Up 과는 다르게, Top-Down 방식은 재귀 함수를 호출할 때 `dp[]` 배열을 채워나간다.  
 
 ```java
-// java
 import java.io.*;
 import java.util.*;
 
@@ -174,30 +139,6 @@ public class Main {
     }
 }
 ```
-
-```python
-# python
-
-# Top-Down
-def fib(n):
-    # 이미 계산한 값이 있으면 바로 반환
-    if n in dp:
-        return dp[n]
-    if n <= 1:
-        return n
-    dp[n] = fib(n - 1) + fib(n - 2)
-    return dp[n]
-
-
-# 피보나치 수열 항의 개수
-n = 10
-# dp 사전 초기화: 아직 계산하지 않은 값들을 저장할 딕셔너리
-dp = {}
-
-sequence = [fib(i) for i in range(1, n + 1)]
-print("Fibonacci Sequence:", sequence)
-```
-파이썬에선 딕셔너리를 썼다는 것만 달라졌을 뿐이다.    
 
 ## 3-3. Bottom-Up vs Top-Down
 1. **Bottom-Up**
@@ -231,126 +172,71 @@ DP를 적용할 수 있는 이유는, 각 단계에서 "물건을 담는다/담�
 
 ### Bottom-Up 방식
 
-- **Java 코드 (Bottom-Up)**
-  
-  ```java
-  // Java - Bottom-Up 방식 (0/1 Knapsack Problem)
-  import java.io.*;
-  import java.util.*;
-  
-  public class Main {
-      static int n = 4;                     // 물건의 개수
-      static int W = 5;                     // 배낭의 최대 무게
-      // 1번부터 n번 물건의 무게와 가치를 저장 (인덱스 0은 사용하지 않음)
-      static int[] weight = {0, 2, 3, 4, 5};
-      static int[] value = {0, 3, 4, 5, 6};
-  
-      public static void main(String[] args) {
-          int[][] dp = new int[n + 1][W + 1];
-  
-          // 각 물건에 대해
-          for (int i = 1; i <= n; i++) {
-              for (int w = 0; w <= W; w++) {
-                  if (weight[i] > w) {
-                      dp[i][w] = dp[i - 1][w];
-                  } else {
-                      dp[i][w] = Math.max(dp[i - 1][w], dp[i - 1][w - weight[i]] + value[i]);
-                  }
-              }
-          }
-          System.out.println("0/1 Knapsack (Bottom-Up): Maximum value = " + dp[n][W]);
-      }
-  }
-  ```
-  
-- **Python 코드 (Bottom-Up)**
-  
-  ```python
-  # Python - Bottom-Up 방식 (0/1 Knapsack Problem)
-  
-  n = 4         # 물건의 개수
-  W = 5         # 배낭의 최대 무게
-  weights = [2, 3, 4, 5]
-  values = [3, 4, 5, 6]
-  
-  # dp[i][w] : 첫 i개의 물건을 고려했을 때, 무게 제한 w에서 얻을 수 있는 최대 가치
-  dp = [[0] * (W + 1) for _ in range(n + 1)]
-  
-  for i in range(1, n + 1):
-      for w in range(W + 1):
-          if weights[i - 1] > w:
-              dp[i][w] = dp[i - 1][w]
-          else:
-              dp[i][w] = max(dp[i - 1][w], dp[i - 1][w - weights[i - 1]] + values[i - 1])
-  
-  print("0/1 Knapsack (Bottom-Up): Maximum value =", dp[n][W])
-  ```
+```java
+// Bottom-Up 방식 (0/1 Knapsack Problem)
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static int n = 4;                     // 물건의 개수
+    static int W = 5;                     // 배낭의 최대 무게
+    // 1번부터 n번 물건의 무게와 가치를 저장 (인덱스 0은 사용하지 않음)
+    static int[] weight = {0, 2, 3, 4, 5};
+    static int[] value = {0, 3, 4, 5, 6};
+
+    public static void main(String[] args) {
+        int[][] dp = new int[n + 1][W + 1];
+
+        // 각 물건에 대해
+        for (int i = 1; i <= n; i++) {
+            for (int w = 0; w <= W; w++) {
+                if (weight[i] > w) {
+                    dp[i][w] = dp[i - 1][w];
+                } else {
+                    dp[i][w] = Math.max(dp[i - 1][w], dp[i - 1][w - weight[i]] + value[i]);
+                }
+            }
+        }
+        System.out.println("0/1 Knapsack (Bottom-Up): Maximum value = " + dp[n][W]);
+    }
+}
+```
 
 ### Top-Down 방식
 
-- **Java 코드 (Top-Down)**
-  
-  ```java
-  // Java - Top-Down 방식 (0/1 Knapsack Problem)
-  import java.io.*;
-  import java.util.*;
-  
-  public class Main {
-      static int n = 4;
-      static int W = 5;
-      static int[] weight = {0, 2, 3, 4, 5};
-      static int[] value = {0, 3, 4, 5, 6};
-      // dp[i][w] 값을 -1로 초기화하여 아직 계산되지 않은 상태임을 표시
-      static int[][] dp = new int[n + 1][W + 1];
-  
-      public static int knapSack(int i, int w) {
-          if (i == 0 || w == 0) return 0;
-          if (dp[i][w] != -1) return dp[i][w];
-          if (weight[i] > w) {
-              dp[i][w] = knapSack(i - 1, w);
-          } else {
-              dp[i][w] = Math.max(knapSack(i - 1, w), knapSack(i - 1, w - weight[i]) + value[i]);
-          }
-          return dp[i][w];
-      }
-      
-      public static void main(String[] args) {
-          for (int i = 0; i <= n; i++) {
-              Arrays.fill(dp[i], -1);
-          }
-          int result = knapSack(n, W);
-          System.out.println("0/1 Knapsack (Top-Down): Maximum value = " + result);
-      }
-  }
-  ```
-  
-- **Python 코드 (Top-Down)**
-  
-  ```python
-  # Python - Top-Down 방식 (0/1 Knapsack Problem)
-  
-  n = 4
-  W = 5
-  weights = [2, 3, 4, 5]
-  values = [3, 4, 5, 6]
-  
-  # 메모이제이션을 위한 사전
-  memo = {}
-  
-  def knapSack(i, w):
-      if i == 0 or w == 0:
-          return 0
-      if (i, w) in memo:
-          return memo[(i, w)]
-      if weights[i - 1] > w:
-          memo[(i, w)] = knapSack(i - 1, w)
-      else:
-          memo[(i, w)] = max(knapSack(i - 1, w),
-                             knapSack(i - 1, w - weights[i - 1]) + values[i - 1])
-      return memo[(i, w)]
-  
-  print("0/1 Knapsack (Top-Down): Maximum value =", knapSack(n, W))
-  ```
+```java
+// Top-Down 방식 (0/1 Knapsack Problem)
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static int n = 4;
+    static int W = 5;
+    static int[] weight = {0, 2, 3, 4, 5};
+    static int[] value = {0, 3, 4, 5, 6};
+    // dp[i][w] 값을 -1로 초기화하여 아직 계산되지 않은 상태임을 표시
+    static int[][] dp = new int[n + 1][W + 1];
+
+    public static int knapSack(int i, int w) {
+        if (i == 0 || w == 0) return 0;
+        if (dp[i][w] != -1) return dp[i][w];
+        if (weight[i] > w) {
+            dp[i][w] = knapSack(i - 1, w);
+        } else {
+            dp[i][w] = Math.max(knapSack(i - 1, w), knapSack(i - 1, w - weight[i]) + value[i]);
+        }
+        return dp[i][w];
+    }
+    
+    public static void main(String[] args) {
+        for (int i = 0; i <= n; i++) {
+            Arrays.fill(dp[i], -1);
+        }
+        int result = knapSack(n, W);
+        System.out.println("0/1 Knapsack (Top-Down): Maximum value = " + result);
+    }
+}
+```
 
 ## 5-2. 최장 공통 수열 (Longest Common Subsequence, LCS)
 
@@ -361,119 +247,72 @@ DP를 적용할 수 있는 이유는, 각 단계에서 "물건을 담는다/담�
 
 ### Bottom-Up 방식
 
-- **Java 코드 (Bottom-Up)**
-  
-  ```java
-  // Java - Bottom-Up 방식 (Longest Common Subsequence)
-  import java.io.*;
-  import java.util.*;
-  
-  public class Main {
-      public static int lcsBottomUp(String s1, String s2) {
-          int m = s1.length();
-          int n = s2.length();
-          int[][] dp = new int[m + 1][n + 1];
-  
-          for (int i = 1; i <= m; i++) {
-              for (int j = 1; j <= n; j++) {
-                  if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
-                      dp[i][j] = dp[i - 1][j - 1] + 1;
-                  } else {
-                      dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
-                  }
-              }
-          }
-          return dp[m][n];
-      }
-  
-      public static void main(String[] args) {
-          String s1 = "ABCBDAB";
-          String s2 = "BDCAB";
-          int result = lcsBottomUp(s1, s2);
-          System.out.println("LCS (Bottom-Up): Length = " + result);
-      }
-  }
-  ```
-  
-- **Python 코드 (Bottom-Up)**
-  
-  ```python
-  # Python - Bottom-Up 방식 (Longest Common Subsequence)
-  
-  def lcs_bottom_up(s1, s2):
-      m, n = len(s1), len(s2)
-      dp = [[0] * (n + 1) for _ in range(m + 1)]
-      for i in range(1, m + 1):
-          for j in range(1, n + 1):
-              if s1[i - 1] == s2[j - 1]:
-                  dp[i][j] = dp[i - 1][j - 1] + 1
-              else:
-                  dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
-      return dp[m][n]
-  
-  s1 = "ABCBDAB"
-  s2 = "BDCAB"
-  print("LCS (Bottom-Up): Length =", lcs_bottom_up(s1, s2))
-  ```
+```java
+// Java - Bottom-Up 방식 (Longest Common Subsequence)
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static int lcsBottomUp(String s1, String s2) {
+        int m = s1.length();
+        int n = s2.length();
+        int[][] dp = new int[m + 1][n + 1];
+
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+        return dp[m][n];
+    }
+
+    public static void main(String[] args) {
+        String s1 = "ABCBDAB";
+        String s2 = "BDCAB";
+        int result = lcsBottomUp(s1, s2);
+        System.out.println("LCS (Bottom-Up): Length = " + result);
+    }
+}
+```
 
 ### Top-Down 방식
 
-- **Java 코드 (Top-Down)**
-  
-  ```java
-  // Java - Top-Down 방식 (Longest Common Subsequence)
-  import java.io.*;
-  import java.util.*;
-  
-  public class Main {
-      public static int lcsTopDown(String s1, String s2, int i, int j, int[][] memo) {
-          if (i == s1.length() || j == s2.length()) return 0;
-          if (memo[i][j] != -1) return memo[i][j];
-  
-          if (s1.charAt(i) == s2.charAt(j)) {
-              memo[i][j] = 1 + lcsTopDown(s1, s2, i + 1, j + 1, memo);
-          } else {
-              memo[i][j] = Math.max(lcsTopDown(s1, s2, i + 1, j, memo), lcsTopDown(s1, s2, i, j + 1, memo));
-          }
-          return memo[i][j];
-      }
-  
-      public static void main(String[] args) {
-          String s1 = "ABCBDAB";
-          String s2 = "BDCAB";
-          int m = s1.length();
-          int n = s2.length();
-          int[][] memo = new int[m][n];
-          for (int i = 0; i < m; i++) {
-              Arrays.fill(memo[i], -1);
-          }
-          int result = lcsTopDown(s1, s2, 0, 0, memo);
-          System.out.println("LCS (Top-Down): Length = " + result);
-      }
-  }
-  ```
-  
-- **Python 코드 (Top-Down)**
-  
-  ```python
-  # Python - Top-Down 방식 (Longest Common Subsequence)
-  from functools import lru_cache
-  
-  def lcs_top_down(s1, s2):
-      @lru_cache(maxsize=None)
-      def helper(i, j):
-          if i == len(s1) or j == len(s2):
-              return 0
-          if s1[i] == s2[j]:
-              return 1 + helper(i + 1, j + 1)
-          else:
-              return max(helper(i + 1, j), helper(i, j + 1))
-      return helper(0, 0)
-  
-  s1 = "ABCBDAB"
-  s2 = "BDCAB"
-  print("LCS (Top-Down): Length =", lcs_top_down(s1, s2))
-  ```
+```java
+// Java - Top-Down 방식 (Longest Common Subsequence)
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static int lcsTopDown(String s1, String s2, int i, int j, int[][] memo) {
+        if (i == s1.length() || j == s2.length()) return 0;
+        if (memo[i][j] != -1) return memo[i][j];
+
+        if (s1.charAt(i) == s2.charAt(j)) {
+            memo[i][j] = 1 + lcsTopDown(s1, s2, i + 1, j + 1, memo);
+        } else {
+            memo[i][j] = Math.max(lcsTopDown(s1, s2, i + 1, j, memo), lcsTopDown(s1, s2, i, j + 1, memo));
+        }
+        return memo[i][j];
+    }
+
+    public static void main(String[] args) {
+        String s1 = "ABCBDAB";
+        String s2 = "BDCAB";
+        int m = s1.length();
+        int n = s2.length();
+        int[][] memo = new int[m][n];
+        for (int i = 0; i < m; i++) {
+            Arrays.fill(memo[i], -1);
+        }
+        int result = lcsTopDown(s1, s2, 0, 0, memo);
+        System.out.println("LCS (Top-Down): Length = " + result);
+    }
+}
+```
 
 ## 5-3. 기타 문제 유형
 
