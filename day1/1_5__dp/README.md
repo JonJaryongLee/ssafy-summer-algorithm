@@ -170,10 +170,7 @@ public class Main {
 0/1 배낭 문제는 N개의 물건이 각각 정해진 무게와 가치를 가지고 있고, 한정된 무게 W를 초과하지 않도록 물건들을 선택하여 총 가치를 최대화하는 문제이다.  
 DP를 적용할 수 있는 이유는, 각 단계에서 "물건을 담는다/담지 않는다"라는 **중복되는 부분 문제**와, 이전 결정 결과를 기반으로 최적의 해를 구성하는 **최적 부분 구조**가 존재하기 때문이다.
 
-### Bottom-Up 방식
-
 ```java
-// Bottom-Up 방식 (0/1 Knapsack Problem)
 import java.io.*;
 import java.util.*;
 
@@ -185,55 +182,7 @@ public class Main {
     static int[] value = {0, 3, 4, 5, 6};
 
     public static void main(String[] args) {
-        int[][] dp = new int[n + 1][W + 1];
-
-        // 각 물건에 대해
-        for (int i = 1; i <= n; i++) {
-            for (int w = 0; w <= W; w++) {
-                if (weight[i] > w) {
-                    dp[i][w] = dp[i - 1][w];
-                } else {
-                    dp[i][w] = Math.max(dp[i - 1][w], dp[i - 1][w - weight[i]] + value[i]);
-                }
-            }
-        }
-        System.out.println("0/1 Knapsack (Bottom-Up): Maximum value = " + dp[n][W]);
-    }
-}
-```
-
-### Top-Down 방식
-
-```java
-// Top-Down 방식 (0/1 Knapsack Problem)
-import java.io.*;
-import java.util.*;
-
-public class Main {
-    static int n = 4;
-    static int W = 5;
-    static int[] weight = {0, 2, 3, 4, 5};
-    static int[] value = {0, 3, 4, 5, 6};
-    // dp[i][w] 값을 -1로 초기화하여 아직 계산되지 않은 상태임을 표시
-    static int[][] dp = new int[n + 1][W + 1];
-
-    public static int knapSack(int i, int w) {
-        if (i == 0 || w == 0) return 0;
-        if (dp[i][w] != -1) return dp[i][w];
-        if (weight[i] > w) {
-            dp[i][w] = knapSack(i - 1, w);
-        } else {
-            dp[i][w] = Math.max(knapSack(i - 1, w), knapSack(i - 1, w - weight[i]) + value[i]);
-        }
-        return dp[i][w];
-    }
-    
-    public static void main(String[] args) {
-        for (int i = 0; i <= n; i++) {
-            Arrays.fill(dp[i], -1);
-        }
-        int result = knapSack(n, W);
-        System.out.println("0/1 Knapsack (Top-Down): Maximum value = " + result);
+        
     }
 }
 ```
@@ -248,26 +197,12 @@ public class Main {
 ### Bottom-Up 방식
 
 ```java
-// Java - Bottom-Up 방식 (Longest Common Subsequence)
 import java.io.*;
 import java.util.*;
 
 public class Main {
     public static int lcsBottomUp(String s1, String s2) {
-        int m = s1.length();
-        int n = s2.length();
-        int[][] dp = new int[m + 1][n + 1];
-
-        for (int i = 1; i <= m; i++) {
-            for (int j = 1; j <= n; j++) {
-                if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
-                    dp[i][j] = dp[i - 1][j - 1] + 1;
-                } else {
-                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
-                }
-            }
-        }
-        return dp[m][n];
+       
     }
 
     public static void main(String[] args) {
@@ -275,41 +210,6 @@ public class Main {
         String s2 = "BDCAB";
         int result = lcsBottomUp(s1, s2);
         System.out.println("LCS (Bottom-Up): Length = " + result);
-    }
-}
-```
-
-### Top-Down 방식
-
-```java
-// Java - Top-Down 방식 (Longest Common Subsequence)
-import java.io.*;
-import java.util.*;
-
-public class Main {
-    public static int lcsTopDown(String s1, String s2, int i, int j, int[][] memo) {
-        if (i == s1.length() || j == s2.length()) return 0;
-        if (memo[i][j] != -1) return memo[i][j];
-
-        if (s1.charAt(i) == s2.charAt(j)) {
-            memo[i][j] = 1 + lcsTopDown(s1, s2, i + 1, j + 1, memo);
-        } else {
-            memo[i][j] = Math.max(lcsTopDown(s1, s2, i + 1, j, memo), lcsTopDown(s1, s2, i, j + 1, memo));
-        }
-        return memo[i][j];
-    }
-
-    public static void main(String[] args) {
-        String s1 = "ABCBDAB";
-        String s2 = "BDCAB";
-        int m = s1.length();
-        int n = s2.length();
-        int[][] memo = new int[m][n];
-        for (int i = 0; i < m; i++) {
-            Arrays.fill(memo[i], -1);
-        }
-        int result = lcsTopDown(s1, s2, 0, 0, memo);
-        System.out.println("LCS (Top-Down): Length = " + result);
     }
 }
 ```
