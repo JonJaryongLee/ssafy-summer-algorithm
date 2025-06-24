@@ -62,7 +62,7 @@ void dijkstra(int sy, int sx)
 
 int main()
 {
-    // freopen("sample_input.txt", "r", stdin);
+    // freopen("input.txt", "r", stdin);
 
     cin >> N >> M;
 

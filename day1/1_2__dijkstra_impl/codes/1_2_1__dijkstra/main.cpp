@@ -57,7 +57,7 @@ void dijkstra(int st)
 
 int main()
 {
-    freopen("sample_input.txt", "r", stdin);
+    freopen("input.txt", "r", stdin);
     cin >> N >> M;
     int from, to;
     long long cost;
