@@ -37,7 +37,7 @@ def init(mStr : str)
 Parameters
 - mainStr : 초기 문자열 (소문자, 길이 1~30,000)  
 
---
+---
 
 ```cpp
 // cpp
@@ -57,6 +57,8 @@ mainStr 맨 뒤에 newStr 문자열을 추가한다.
 
 Parameters  
 - newStr : 끝에 붙일 문자열 (소문자, 길이 1~4)
+
+---
 
 ```cpp
 // cpp
@@ -78,6 +80,8 @@ n은 호출 시점의 mainStr 길이보다 작음이 보장된다.
 Parameters  
 - n : 제거할 문자의 개수 ( 1 ≤ n < 문자열 길이)  
 
+---
+
 ```cpp
 // cpp
 void reverseStr()
@@ -92,6 +96,8 @@ def reverseStr()
 ```
 
 mainStr을 뒤집는다.  
+
+---
 
 ```cpp
 // cpp
