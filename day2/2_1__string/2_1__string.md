@@ -37,6 +37,8 @@ def init(mStr : str)
 Parameters
 - mainStr : 초기 문자열 (소문자, 길이 1~30,000)  
 
+---
+
 ```cpp
 // cpp
 void pushBack(char newStr[])
